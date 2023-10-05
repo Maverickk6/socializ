@@ -6,7 +6,7 @@ from .models import User
 class UsersSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        exclude = "password"
+        exclude = ("password",)
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -44,13 +44,30 @@ class ChangePasswordSerializer(serializers.Serializer):
 class SearchUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "email", "first_name", "last_name", "bio", "image")
+        fields = (
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "bio",
+            "image",
+        )
 
 
 class UserLoggedSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("id", "username", "email", "first_name", "last_name", "bio", "image")
+        fields = (
+            "id",
+            "username",
+            "email",
+            "first_name",
+            "last_name",
+            "bio",
+            "image",
+        )
+
 
 # Auth
 

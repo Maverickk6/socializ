@@ -1,9 +1,10 @@
 from django.contrib import admin
-from django.urls import path, include, re_path
+from django.urls import path, include
 from features.userAuth.views import LoginView
 
 from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
 from rest_framework import permissions
+from django.urls import re_path
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
@@ -18,13 +19,13 @@ schema_view = get_schema_view(
         license=openapi.License(name="BSD License"),
     ),
     public=True,
-    permission_classes=(permissions.AllowAny),
+    permission_classes=(permissions.AllowAny,),
 )
 
 
 urlpatterns = [
     # swagger
-    path(
+    re_path(
         "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
     ),
     path(
@@ -38,7 +39,7 @@ urlpatterns = [
     path("", include('features.post.urls')),
     path("", include('features.comments.urls')),
     # Simple jwt
-    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("verify/", TokenVerifyView.as_view(), name="token-refresh"),
     # Login
     path("login/", LoginView, name="Login"),
