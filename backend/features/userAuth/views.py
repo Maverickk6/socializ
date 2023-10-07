@@ -15,6 +15,7 @@ from rest_framework.decorators import action
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from django.db.models.query_utils import Q
+from rest_framework_simplejwt.views import TokenObtainPairView
 from .pagination import CustomPagination
 from .models import User
 
@@ -53,7 +54,7 @@ class UserView(viewsets.ModelViewSet):
             return super().get_permissions()
 
     def list(self, request):
-        users_serializer = self.serializer_class(self)
+        users_serializer = self.serializer_class(self.get_queryset(), many=True)
         return Response(users_serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
@@ -81,7 +82,7 @@ class UserView(viewsets.ModelViewSet):
 
     def retrieve(self, request, pk=None):
         user = self.get_object(pk=pk)
-        user_serializer = self.serializer_class.Mmeta.model.objects.filter(
+        user_serializer = self.serializer_class.Meta.model.objects.filter(
             is_active=True, pk=pk
         ).first()
         if user:
@@ -103,7 +104,7 @@ class UserView(viewsets.ModelViewSet):
             )
         else:
             return Response(
-                {"message": "Error deleting user"}, status=status.HTTP_404_NOT_FOUND
+                {"message": "Error deleting user"}, status=status.HTTP_400_BAD_REQUEST
             )
 
     @action(methods=["POST"], detail=True)
@@ -125,7 +126,7 @@ class UserView(viewsets.ModelViewSet):
 # auth
 
 
-class LoginView(TokenObtainPairSerializer):
+class LoginView(TokenObtainPairView):
     serializer_class = TokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):

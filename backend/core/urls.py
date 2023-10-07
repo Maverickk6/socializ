@@ -11,7 +11,7 @@ from drf_yasg import openapi
 
 schema_view = get_schema_view(
     openapi.Info(
-        title="Snippets API",
+        title="Socializ API",
         default_version="v1",
         description="Test description",
         terms_of_service="https://www.google.com/policies/terms/",
@@ -35,13 +35,13 @@ urlpatterns = [
     ),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
     path("admin/", admin.site.urls),
-    path("", include('features.userAuth.urls')),
-    path("", include('features.post.urls')),
-    path("", include('features.comments.urls')),
+    path("", include("features.userAuth.urls")),
+    path("", include("features.post.urls")),
+    path("", include("features.comments.urls")),
     # Simple jwt
     path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("verify/", TokenVerifyView.as_view(), name="token-refresh"),
     # Login
-    path("login/", LoginView, name="Login"),
-    path("", include('features.userAuth.routers'))
+    path("login/", LoginView.as_view(), name="Login"),
+    path("", include("features.userAuth.routers")),
 ]

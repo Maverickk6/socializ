@@ -15,5 +15,5 @@ class Comment(models.Model):
         return f"comment by: {self.author.username} on {self.post.title}"
 
     class Meta:
-        verbose_name = "comment"
-        verbose_name_plural = "comments"
+        verbose_name = "Comment"
+        verbose_name_plural = "Comments"
