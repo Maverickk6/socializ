@@ -40,8 +40,10 @@ urlpatterns = [
     path("", include("features.comments.urls")),
     # Simple jwt
     path("refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    path("verify/", TokenVerifyView.as_view(), name="token-refresh"),
+    path("verify/", TokenVerifyView.as_view(), name="token_verify"),
     # Login
-    path("login/", LoginView.as_view(), name="Login"),
+    path("login/", LoginView.as_view(), name="login"),
+    # viewsets
     path("", include("features.userAuth.routers")),
+    path("", include("features.post.routers")),
 ]

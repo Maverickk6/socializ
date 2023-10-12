@@ -1,12 +1,19 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from .models import User
+from features.post.serializers import PostSerializer
 
 
 class UsersSerializer(serializers.ModelSerializer):
+    posts = PostSerializer(many=True, read_only=True)
+    posts_count = serializers.SerializerMethodField()
+
     class Meta:
         model = User
         exclude = ("password",)
+
+    def get_posts_count(self, obj):
+        return obj.posts.count()
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
@@ -42,6 +49,7 @@ class ChangePasswordSerializer(serializers.Serializer):
 
 
 class SearchUserSerializer(serializers.ModelSerializer):
+    posts_count = serializers.SerializerMethodField()
     class Meta:
         model = User
         fields = (
@@ -53,6 +61,9 @@ class SearchUserSerializer(serializers.ModelSerializer):
             "bio",
             "image",
         )
+    
+    def get_posts_count(self, obj):
+        return obj.posts.count()
 
 
 class UserLoggedSerializer(serializers.ModelSerializer):

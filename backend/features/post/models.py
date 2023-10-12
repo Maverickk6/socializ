@@ -22,5 +22,5 @@ class Post(models.Model):
         return f"{self.author.username} - {self.id}"
 
     class Meta:
-        verbose_name = "Post"
-        verbose_name_plural = "Posts"
+        verbose_name = "post"
+        verbose_name_plural = "posts"
