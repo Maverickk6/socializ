@@ -12,7 +12,7 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"comment by: {self.author.username} on {self.post.title}"
+        return f"comment by: {self.author.username} on {self.post.description}"
 
     class Meta:
         verbose_name = "Comment"

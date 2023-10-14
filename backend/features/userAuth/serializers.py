@@ -60,6 +60,7 @@ class SearchUserSerializer(serializers.ModelSerializer):
             "last_name",
             "bio",
             "image",
+            "posts_count",
         )
     
     def get_posts_count(self, obj):

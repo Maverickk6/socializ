@@ -46,4 +46,5 @@ urlpatterns = [
     # viewsets
     path("", include("features.userAuth.routers")),
     path("", include("features.post.routers")),
+    path("", include("features.comments.routers")),
 ]
